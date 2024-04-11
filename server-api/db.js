@@ -1,14 +1,14 @@
-import mysql from "mysql";
+import mysql from 'mysql2/promise';
 import 'dotenv/config';
 
-export const dbConnection = mysql.createConnection({
-    host: process.env.DBHOST,
-    user: process.env.DBUSER,
-    password: process.env.DBPASSWORD,
-    database: process.env.DBNAME,
+export const dbConnection = await mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
-dbConnection.connect(function(err) {
-    if(err) throw err;
-    console.log("Connected!");
-})
+// await dbConnection.connect(function(err) {
+//     if(err) throw err;
+//     console.log("Connected!");
+// })

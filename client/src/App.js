@@ -26,12 +26,11 @@ function App() {
     try {
       const response = await fetch("http://localhost:8800/");
       const data = await response.json();
-      // console.log(data);
 
       setUsers(data.sort((a, b) => (a.name >  b.name ? 1 : -1)));
     } catch(error) {
       console.error("Erroooor teesst !@#$¨&*(!!!", error);
-      toast.error(error);
+      throw toast.error(error);
     }
   }
 

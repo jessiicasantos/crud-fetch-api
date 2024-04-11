@@ -127,7 +127,39 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
                 console.error("Errooo!!! !@#$% \n", error);
                 toast.error(error);
             }
+        } else {
+            try {
+                const user = ref.current;
+                let userDate_birth = new Date(user.date_birth.value);
+                let formattedDate = formatDateToYYYYMMDD(userDate_birth);
+
+                let requestOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(
+                        {
+                            name: user.name.value,
+                            email: user.email.value,
+                            phone: user.phone.value,
+                            date_birth: formattedDate
+                        }
+                    )
+                }
+
+                const response = await fetch("http://localhost:8800/create-user", requestOptions);
+
+                let data = await response.json();
+
+                toast.success(data);
+            } catch(err) {
+                console.log(err); 
+            }
         }
+
+        user.name.value = "";
+        user.email.value = "";
+        user.phone.value = "";
+        user.date_birth.value = "";
 
         setOnEdit(null);
         getUsers();

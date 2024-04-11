@@ -45,16 +45,13 @@ const Grid = ({ users, setUsers, setOnEdit }) => {
     };
 
     const handleDelete = async (id) => {
-        await fetch("http://localhost:8800/" + id)
+        await fetch("http://localhost:8800/" + id, { method: "DELETE" })
         .then(({ data }) => {
             const newArray = users.filter((user) => user.id !== id);
 
-            console.log(`New array value before setusers(newArray): ${newArray}.`);
-
             setUsers(newArray);
-            console.log(`New setUsers(newArray) value before setusers(newArray): ${setUsers(newArray)}.`);
 
-            toast.success(data);
+            return toast.success("Usuário removido com sucesso!");
         })
         .catch(({ data }) => toast.error(data));
 
